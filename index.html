@@ -1,0 +1,212 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My Shop</title>
+
+	<style>
+
+		body {
+			background-color: ivory;
+		}
+
+		#header {
+			background-color: rgb(19, 105, 139);
+			text-align: center;
+  			color: white;
+  			font-size: 30px;
+  			margin: -10px;
+  			padding: 10px;
+  			overflow: auto;
+  			margin-bottom: 30px;
+		}
+
+		h1 {
+			text-align: center;
+			font-weight: normal;
+			letter-spacing: 3px;
+		}
+
+		#products {
+			width: 960px;
+			margin-left: auto;
+			margin-right: auto;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 100px;
+		}
+
+		.img-thumbnail {
+    		width: 100%; height: 225px;
+		}
+
+		#footer {
+		  	width: 100%;
+		  	background-color: rgb(19, 105, 139);
+		  	color: white;
+		  	text-align: center;
+		  	padding: 10px;
+		  	opacity: 50%;
+		  	letter-spacing: 2px;
+		}
+
+		.description {
+			color: rgb(19, 105, 139);
+			font-size: 1.5em;
+			padding: 0;
+			margin: 0;
+		}
+		#stuff {
+			display: flex;
+			width: 960px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#cart {
+			text-align: center;
+			font-size: 1.5em;
+		}
+		#balance {
+			text-align: center;
+			width: 720px;
+		}
+		#form-currency {
+			font-weight: bold;
+			font-size: 1.2em;
+			padding: 10px;
+		}
+		input {
+			padding: 10px;
+		}
+		button {
+			padding: 10px;
+		}
+
+		.row {
+			display: flex;
+    		flex-direction: row;
+    		justify-content: space-evenly;
+    		padding: 5px;
+			text-align: center;
+		}
+
+		.col {
+			padding: 5px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div id="header">
+		<h1>Shop</h1>
+	</div>
+
+	<div id="products">
+		<div class="row">
+			<div class="col">
+				<img src="/img/desktop.jpg" class="img-thumbnail" id ="desktop" alt="image">
+				<h4>Cost: $<span id="desktopCost">99</span></h4>
+			</div>
+			<div class="col">
+				<img src="/img/teslajpg.jpg" class="img-thumbnail" id ="tesla" alt="image">
+				<h4>Cost: $<span id="teslaCost">85</span></h4>
+			</div>
+			<div class="col">
+				<img src="/img/stick.png" class="img-thumbnail" id ="stick" alt="image">
+				<h4>Cost: $<span id="stickCost">1234</span></h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<img src="/img/mansion.jpg" class="img-thumbnail" id ="mansion" alt="image">
+				<h4>Cost: $<span id="mansionCost">12</span></h4>
+			</div>
+			<div class="col">
+				<img src="/img/chair.webp" class="img-thumbnail" id ="chair" alt="image">
+				<h4>Cost: $<span id="chairCost">103</span></h4>
+			</div>
+			<div class="col">
+				<img src="/img/earth.jpg" class="img-thumbnail" id ="earth" alt="image">
+				<h4>Cost: $<span id="earthCost">1</span></h4>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div id="stuff"> 
+
+		<div id="balance">
+			<h4>Remaining Funds: $<span id="funds">0</span></h4>
+			<label for="money" id="form-currency">$</label>
+			<input type="text" name="money" id="fund-input">
+			<button id="fund-btn">Add Funds</button>
+		</div>
+
+		<div id="cart">
+			<h3>Cart Subtotal: $<span id="subtotal">0</span></h3>
+		</div>
+
+	</div> <!-- stuff -->
+	<br>
+	<div id="footer">
+		<p>Footer Here</p>
+	</div>
+
+	<script>
+
+	/* Remaining Funds
+		1. user enters number into field
+		2. user presses add funds button
+			a. add input to global var for remaining funds 
+			b. update total to user
+			c. clear form field
+		3. if price is less than/equal remFunds, add to total and subtract from remFunds
+			a. if price is higher, show alert
+	*/
+
+	/* Subtotal
+		1. create variable to keep track of total
+		2. get price of item when user clicks on img
+		3. update total variable
+		3. display new total to user
+	*/
+
+	let remfunds = 0;
+	let holder = 0;
+	let total = 0;
+	let cost = 0;
+
+	document.querySelector('#fund-btn').onclick = function(){addFunds()};
+	document.querySelector('#desktop').onclick = function(){addTotal(Number(document.getElementById("desktopCost").innerHTML))};
+	document.querySelector('#tesla').onclick = function(){addTotal(Number(document.getElementById("teslaCost").innerHTML))};
+	document.querySelector('#stick').onclick = function(){addTotal(Number(document.getElementById("stickCost").innerHTML))};
+	document.querySelector('#mansion').onclick = function(){addTotal(Number(document.getElementById("mansionCost").innerHTML))};
+	document.querySelector('#chair').onclick = function(){addTotal(Number(document.getElementById("chairCost").innerHTML))};
+	document.querySelector('#earth').onclick = function(){addTotal(Number(document.getElementById("earthCost").innerHTML))};
+
+	function addFunds(){
+		holder = Number(document.getElementById("fund-input").value);
+		remfunds += holder;
+		document.querySelector("#funds").innerHTML=remfunds;
+		document.getElementById("fund-input").value = "";
+	}
+
+	function addTotal(cost){
+		if(cost <= remfunds){
+			total += cost;
+			remfunds -= cost;
+			document.querySelector("#funds").innerHTML=remfunds;
+			document.querySelector("#subtotal").innerHTML=total;
+		}
+		else{
+			alert("WARNING! NOT ENOUGH FUNDS!!!!!");
+		}
+	}
+
+
+	</script>
+
+</body>
+</html>
